@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   }
 });
 
-function MyNotes({ notes, activeNoteId, setActiveNote }) {
+function MyNotes({ notes, activeNoteId, setActiveNoteId }) {
   const classes = useStyles();
 
   return (
@@ -35,7 +35,7 @@ function MyNotes({ notes, activeNoteId, setActiveNote }) {
               (classes.note,
                note.id === activeNoteId ? classes.active : "")
             }
-            onClick={() => setActiveNote(note.id)}
+            onClick={() => setActiveNoteId(note.id)}
           >
             <CardActionArea>
               <CardContent>
@@ -68,7 +68,7 @@ function MyNotes({ notes, activeNoteId, setActiveNote }) {
 MyNotes.propTypes = {
   activeNoteId: PropTypes.number,
   notes: PropTypes.arrayOf(PropTypes.object),
-  setActiveNote: PropTypes.func,
+  setActiveNoteId: PropTypes.func,
 }
 
 export default MyNotes;

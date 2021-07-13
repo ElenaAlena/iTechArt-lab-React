@@ -22,9 +22,9 @@ function MyNotesContainer() {
   const classes = useStyles();
 
   const [notes] = useState(Notes);
-  const [activeNote, setActiveNote] = useState(false);
+  const [activeNoteId, setActiveNoteId] = useState(false);
   const getActiveNote = () => {
-    return notes.find(({ id }) => id === activeNote);
+    return notes.find(({ id }) => id === activeNoteId);
   };
   return (
     <div className={classes.root}>
@@ -37,8 +37,8 @@ function MyNotesContainer() {
         <Grid item xs={4}>
           <MyNotes
             notes={notes}
-            activeNote={activeNote}
-            setActiveNote={setActiveNote}
+            activeNoteId={activeNoteId}
+            setActiveNoteId={setActiveNoteId}
           />
         </Grid>
         <Grid item xs={8}>
@@ -51,8 +51,8 @@ function MyNotesContainer() {
   );
 }
 MyNotesContainer.propTypes = {
-  activeNote: PropTypes.number,
+  activeNoteId: PropTypes.number,
   notes: PropTypes.arrayOf(PropTypes.object),
-  setActiveNote: PropTypes.func,
+  setActiveNoteId: PropTypes.func,
 }
 export default MyNotesContainer;
