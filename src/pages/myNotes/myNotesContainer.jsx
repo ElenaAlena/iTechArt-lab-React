@@ -22,7 +22,7 @@ function MyNotesContainer() {
   const classes = useStyles();
 
   const [notes] = useState(Notes);
-  const [activeNoteId, setActiveNoteId] = useState(false);
+  const [activeNoteId, setActiveNoteId] = useState(-1);
   const getActiveNote = () => {
     return notes.find(({ id }) => id === activeNoteId);
   };

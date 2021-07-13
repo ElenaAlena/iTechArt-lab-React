@@ -2,24 +2,31 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import PropTypes from 'prop-types';
+import IconButton from "@material-ui/core/IconButton";
+import CardHeader from "@material-ui/core/CardHeader";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
-  note: {
-    marginBottom: 12,
-    textAlign: "right"
+  root: {
+    marginBottom: '12px',
+    textAlign: "right",
   },
-  text:{    
-    textAlign: "left"
+  text: {
+    textAlign: "left",
   },
   meta: {
-    fontSize: 10,    
-    textAlign: "right"
+    fontSize: 10,
+    textAlign: "right",
   },
-  active:{
-    backgroundColor: 'aliceblue'
-  }
+  active: {
+    backgroundColor: "aliceblue",
+  },
+  btn: {
+    padding: "3px",
+  },
 });
 
 function MyNotes({ notes, activeNoteId, setActiveNoteId }) {
@@ -27,22 +34,42 @@ function MyNotes({ notes, activeNoteId, setActiveNoteId }) {
 
   return (
     <div className="notes-list">
-      {notes.map(note => {
+      {notes.map((note) => {
         return (
           <Card
             key={note.id}
             className={
-              (classes.note,
-               note.id === activeNoteId ? classes.active : "")
+              [classes.root, note.id === activeNoteId ? classes.active : ""].join(" ")
             }
             onClick={() => setActiveNoteId(note.id)}
           >
-            <CardActionArea>
+              <CardHeader
+                className={classes.text}
+                action={
+                  note.id === activeNoteId ? (
+                    <IconButton
+                      aria-label="close"
+                      className={classes.btn}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setActiveNoteId(-1)
+                        }}
+                    >
+                      <CloseIcon />
+                    </IconButton>
+                  ) : (
+                    ""
+                  )
+                }
+                title={note.title}
+              />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="h2" className={classes.text}>
-                  {note.title}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p" className={classes.text}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  className={classes.text}
+                >
                   {note.description && note.description.substr(0, 100) + "..."}
                 </Typography>
                 <Typography
@@ -57,7 +84,6 @@ function MyNotes({ notes, activeNoteId, setActiveNoteId }) {
                   })}
                 </Typography>
               </CardContent>
-            </CardActionArea>
           </Card>
         );
       })}
@@ -69,7 +95,6 @@ MyNotes.propTypes = {
   activeNoteId: PropTypes.number,
   notes: PropTypes.arrayOf(PropTypes.object),
   setActiveNoteId: PropTypes.func,
-}
+};
 
 export default MyNotes;
-
