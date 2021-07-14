@@ -18,7 +18,7 @@ const MyNoteEdit = ({activeNote, setIsEditMode, onUpdateNote}) => {
 
   const onSaveNote = ()=>{    
     onUpdateNote(updatedNote);
-    setIsEditMode(false)
+    //setIsEditMode(false)
   }
   return (    
     <form className={classes.root} noValidate autoComplete="off">
