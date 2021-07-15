@@ -7,26 +7,30 @@ import MyNotesContainer from "./pages/myNotes/myNotesContainer";
 import About from "./pages/about/aboutContainer";
 import SharedNotesContainer from "./pages/sharedNotes/sharedNotesContainer";
 import Page404Container from "./pages/page404/Page404Container";
+import AuthFormContainer from "./pages/authForm/authFormContainer";
 
-function App({ history }) {
+function App() {
   return (
     <div className="App">
       <Layout>
         <Switch>
+          <Route exact path="/auth">
+            <AuthFormContainer />
+          </Route>
           <Route path={["/about"]}>
             <About />
           </Route>
-          <Route exact path={["/notes", "/"]}>
+          <Route exact path={["/notes","/"]}>
             <MyNotesContainer />
           </Route>
           <Route path={["/shared-notes"]}>
             <SharedNotesContainer />
-          </Route>    
+          </Route>
           <Route path="/not-found">
             <Page404Container />
-          </Route>         
+          </Route>
           <Route path="*">
-            <Redirect to='/not-found'/>
+            <Redirect to="/not-found" />
           </Route>
         </Switch>
       </Layout>

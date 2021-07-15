@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Note from "./Note/Note";
 
-const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditMode }) => (
+const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditMode,isSharedMode=false }) => (
   <div className="notes-list">
     {notes.map((note) => (
       <Note
@@ -11,6 +11,7 @@ const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditM
         key={note.id}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
+        isSharedMode={isSharedMode}
       />
     ))}
   </div>

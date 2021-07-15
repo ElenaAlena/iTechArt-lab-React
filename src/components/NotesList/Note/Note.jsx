@@ -12,7 +12,14 @@ import { CutDescription, DateFormatter } from "utils/utils.js";
 
 import useStyles from "./styled";
 
-const Note = ({ note, activeNoteId, setActiveNoteId, isEditMode, setIsEditMode }) => {
+const Note = ({
+  note,
+  activeNoteId,
+  setActiveNoteId,
+  isEditMode,
+  setIsEditMode,
+  isSharedMode
+}) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
     event.stopPropagation();
@@ -20,13 +27,13 @@ const Note = ({ note, activeNoteId, setActiveNoteId, isEditMode, setIsEditMode }
   };
   const onEditNote = (event) => {
     event.stopPropagation();
-    setActiveNoteId(note.id);   
-    setIsEditMode(true); 
+    setActiveNoteId(note.id);
+    setIsEditMode(true);
   };
-  const onShowNote = (noteId)=>{
-    setIsEditMode(false);
+  const onShowNote = (noteId) => {
+    !isSharedMode && setIsEditMode(false);
     setActiveNoteId(noteId);
-  }
+  };
   return (
     <Card
       className={[
@@ -48,13 +55,15 @@ const Note = ({ note, activeNoteId, setActiveNoteId, isEditMode, setIsEditMode }
                 <CloseIcon />
               </IconButton>
             )}
-            <IconButton
-              aria-label="edit"
-              className={classes.btn}
-              onClick={(event) => onEditNote(event)}
-            >
-              <EditIcon />
-            </IconButton>
+            {!isSharedMode && (
+              <IconButton
+                aria-label="edit"
+                className={classes.btn}
+                onClick={(event) => onEditNote(event)}
+              >
+                <EditIcon />
+              </IconButton>
+            )}
           </div>
         }
         title={note.title}
@@ -71,6 +80,11 @@ const Note = ({ note, activeNoteId, setActiveNoteId, isEditMode, setIsEditMode }
         <Typography className={classes.meta} color="textSecondary" gutterBottom>
           Date of creation {DateFormatter(note.dateCreation)}
         </Typography>
+        {isSharedMode && (
+          <Typography className={classes.meta} color="textSecondary" gutterBottom>
+          by {note.authorName}
+        </Typography>
+        )}
       </CardContent>
     </Card>
   );
@@ -80,8 +94,9 @@ Note.propTypes = {
   activeNoteId: PropTypes.number,
   setActiveNoteId: PropTypes.func,
   note: PropTypes.object,
-  setIsEditMode:PropTypes.func,
-  isEditMode:PropTypes.bool
+  setIsEditMode: PropTypes.func,
+  isEditMode: PropTypes.bool,
+  isSharedMode:PropTypes.bool
 };
 
 export default Note;
