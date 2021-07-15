@@ -1,4 +1,4 @@
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import "./App.css";
 
@@ -13,32 +13,21 @@ function App({ history }) {
     <div className="App">
       <Layout>
         <Switch>
-          <Route
-            history={history}
-            path={["/iTechArt-lab-React/about", "/about"]}
-          >
+          <Route path={["/about"]}>
             <About />
           </Route>
-          <Route
-            history={history}
-            exact
-            path={[
-              "/iTechArt-lab-React/notes",
-              "/notes",
-              '/'
-            ]}
-          >
+          <Route exact path={["/notes", "/"]}>
             <MyNotesContainer />
           </Route>
-          <Route
-            history={history}
-            path={["/iTechArt-lab-React/shared-notes", "/shared-notes"]}
-          >
+          <Route path={["/shared-notes"]}>
             <SharedNotesContainer />
-          </Route>
-          <Route history={history} path="*">
+          </Route>    
+          <Route path="/not-found">
             <Page404Container />
           </Route>         
+          <Route path="*">
+            <Redirect to='/not-found'/>
+          </Route>
         </Switch>
       </Layout>
     </div>
