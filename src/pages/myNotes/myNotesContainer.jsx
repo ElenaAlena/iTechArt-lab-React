@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 
 import NOTES from "config/constants/notes.js";
 
-import NotesMain from "./MyNotes";
+import MyNotes from "./MyNotes";
 
-function MyNotesContainer() {
+const MyNotesContainer=() =>{
   const [notes, setNotes] = useState(localStorage.notes ? JSON.parse(localStorage.notes) : NOTES);
   const [activeNoteId, setActiveNoteId] = useState(-1);
   const [isEditMode,setIsEditMode] = useState(false);
@@ -14,6 +14,7 @@ function MyNotesContainer() {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
 
+
   const getActiveNote = () => notes.find(({ id }) => id === activeNoteId);
   const onUpdateNote = (updatedNote) => {
     const updatedNotesArr = notes.map((note) => note.id === updatedNote.id ? updatedNote : note);
@@ -21,7 +22,7 @@ function MyNotesContainer() {
   };
 
   return (
-    <NotesMain
+    <MyNotes
       notes={notes}
       activeNoteId={activeNoteId}
       setActiveNoteId={setActiveNoteId}

@@ -10,7 +10,7 @@ import MyNoteEdit from "./MyNoteEdit/MyNoteEdit";
 
 import useStyles from "./styled.js";
 
-const NotesMain = ({
+const MyNotes = ({
   notes,
   activeNoteId,
   setActiveNoteId,
@@ -54,7 +54,7 @@ const NotesMain = ({
     </div>
   );
 };
-NotesMain.propTypes = {
+MyNotes.propTypes = {
   activeNoteId: PropTypes.number,
   notes: PropTypes.arrayOf(PropTypes.object),
   setActiveNoteId: PropTypes.func,
@@ -63,4 +63,4 @@ NotesMain.propTypes = {
   setIsEditMode: PropTypes.func,
   onUpdateNote: PropTypes.func,
 };
-export default NotesMain;
+export default MyNotes;
