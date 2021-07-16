@@ -42,7 +42,7 @@ const MyNoteEdit = ({activeNote, setIsEditMode, onUpdateNote}) => {
           onChange={(e) => onEditField("description", e.target.value)}
         />
       </div>
-      <Button variant="contained" color="primary" onClick={()=>onSaveNote()}>
+      <Button variant="contained" color="primary" onClick={onSaveNote}>
         Save Note
       </Button>
     </form>

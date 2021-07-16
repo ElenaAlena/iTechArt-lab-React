@@ -7,19 +7,26 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
 import useStyles from "./styled";
+import ROUTES from "config/constants/routes";
 
-const Layout = ({ children}) => {
+const Layout = ({ children }) => {
   const classes = useStyles();
   return (
     <React.Fragment>
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-            </Typography>
-            <NavLink className={classes.navLink} to="/notes" activeClassName={classes.active}>notes</NavLink>
-            <NavLink className={classes.navLink} to="shared-notes" activeClassName={classes.active}>Shared Notes</NavLink>
-            <NavLink className={classes.navLink} to="about" activeClassName={classes.active}>About</NavLink>
+            <Typography variant="h6" className={classes.title}></Typography>
+            {ROUTES.map((route, index) => (
+              route.isLink && <NavLink
+                className={classes.navLink}
+                to={route.path}
+                activeClassName={classes.active}
+                key={index}
+              >
+                {route.title}
+              </NavLink>
+            ))}
           </Toolbar>
         </AppBar>
       </div>
@@ -28,7 +35,7 @@ const Layout = ({ children}) => {
   );
 };
 Layout.propTypes = {
-    children: PropTypes.object,
-    title:PropTypes.string,
-  };
+  children: PropTypes.object,
+  title: PropTypes.string,
+};
 export default Layout;

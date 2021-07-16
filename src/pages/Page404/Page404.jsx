@@ -1,10 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Button from "@material-ui/core/Button";
 
 const Page404 = () => {
+  let history = useHistory();
   const goToPreviousPath = () => {
-    window.history.back();
+    history.goBack()
   };
   return (
     <div>

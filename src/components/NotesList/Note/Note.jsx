@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
 
-import { CutDescription, DateFormatter } from "utils/utils.js";
+import { cutDescription, dateFormatter } from "utils/utils.js";
 
 import useStyles from "./styled";
 
@@ -18,7 +18,7 @@ const Note = ({
   setActiveNoteId,
   isEditMode,
   setIsEditMode,
-  isSharedMode
+  isSharedMode,
 }) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
@@ -34,14 +34,12 @@ const Note = ({
     !isSharedMode && setIsEditMode(false);
     setActiveNoteId(noteId);
   };
+  const cardClasses = [
+    classes.root,
+    note.id === activeNoteId ? classes.active : "",
+  ].join(" ");
   return (
-    <Card
-      className={[
-        classes.root,
-        note.id === activeNoteId ? classes.active : "",
-      ].join(" ")}
-      onClick={() => onShowNote(note.id)}
-    >
+    <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
       <CardHeader
         className={classes.text}
         action={
@@ -75,15 +73,19 @@ const Note = ({
           component="p"
           className={classes.text}
         >
-          {note.description && CutDescription(note.description, 20) + "..."}
+          {note.description && cutDescription(note.description, 20) + "..."}
         </Typography>
         <Typography className={classes.meta} color="textSecondary" gutterBottom>
-          Date of creation {DateFormatter(note.dateCreation)}
+          Date of creation {dateFormatter(note.dateCreation)}
         </Typography>
         {isSharedMode && (
-          <Typography className={classes.meta} color="textSecondary" gutterBottom>
-          by {note.authorName}
-        </Typography>
+          <Typography
+            className={classes.meta}
+            color="textSecondary"
+            gutterBottom
+          >
+            by {note.authorName}
+          </Typography>
         )}
       </CardContent>
     </Card>
@@ -96,7 +98,7 @@ Note.propTypes = {
   note: PropTypes.object,
   setIsEditMode: PropTypes.func,
   isEditMode: PropTypes.bool,
-  isSharedMode:PropTypes.bool
+  isSharedMode: PropTypes.bool,
 };
 
 export default Note;

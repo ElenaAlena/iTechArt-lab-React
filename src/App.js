@@ -7,28 +7,32 @@ import MyNotesContainer from "./pages/myNotes/myNotesContainer";
 import About from "./pages/about/aboutContainer";
 import SharedNotesContainer from "./pages/sharedNotes/sharedNotesContainer";
 import Page404Container from "./pages/page404/Page404Container";
+
 import AuthFormContainer from "./pages/authForm/authFormContainer";
+
+import ROUTES from "config/constants/routes";
+
+const componentRegistry = {
+  MyNotesContainer: MyNotesContainer,
+  AuthFormContainer: AuthFormContainer,
+  SharedNotesContainer: SharedNotesContainer,
+  Page404Container: Page404Container,
+  About: About,
+};
 
 function App() {
   return (
     <div className="App">
       <Layout>
         <Switch>
-          <Route exact path="/auth">
-            <AuthFormContainer />
-          </Route>
-          <Route path={["/about"]}>
-            <About />
-          </Route>
-          <Route exact path={["/notes","/"]}>
-            <MyNotesContainer />
-          </Route>
-          <Route path={["/shared-notes"]}>
-            <SharedNotesContainer />
-          </Route>
-          <Route path="/not-found">
-            <Page404Container />
-          </Route>
+          {ROUTES.map((route, index) => (
+            <Route
+              exact
+              path={route.path}
+              component={componentRegistry[route.component]}
+              key={index}
+            />
+          ))}
           <Route path="*">
             <Redirect to="/not-found" />
           </Route>
