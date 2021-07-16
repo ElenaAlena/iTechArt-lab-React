@@ -3,11 +3,16 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root:{
         display:"flex",
-        flexDirection:"column"
-        
+        flexDirection:"column",
+        alignItems:'center',
     },
     formContainer:{
-        width:"fit-content"
+        width:"fit-content",
+        maxWidth:'30%',
+        padding:"30px"
+    },
+    textField:{
+        
     }
   }));
   export default useStyles;

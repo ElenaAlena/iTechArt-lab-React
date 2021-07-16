@@ -3,7 +3,7 @@ const ROUTES =[
         path:"/auth",
         component:'AuthFormContainer',
         title: "Log In",
-        isLink:false
+        isLink:true
     },
     {
         path:"/notes",
