@@ -7,7 +7,6 @@ import MyNotesContainer from "./pages/myNotes/myNotesContainer";
 import About from "./pages/about/aboutContainer";
 import SharedNotesContainer from "./pages/sharedNotes/sharedNotesContainer";
 import Page404Container from "./pages/page404/Page404Container";
-
 import AuthFormContainer from "./pages/authForm/authFormContainer";
 
 import ROUTES from "config/constants/routes";

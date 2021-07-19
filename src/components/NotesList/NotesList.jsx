@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import Note from "./Note/Note";
+
+import { Note } from "./Note";
 
 const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditMode,isSharedMode=false }) => (
   <div className="notes-list">
@@ -8,10 +9,10 @@ const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditM
         note={note}
         activeNoteId={activeNoteId}
         setActiveNoteId={setActiveNoteId}
-        key={note.id}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         isSharedMode={isSharedMode}
+        key={note.id}
       />
     ))}
   </div>

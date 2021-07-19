@@ -12,7 +12,7 @@ import { cutDescription, dateFormatter } from "utils/utils.js";
 
 import useStyles from "./styled";
 
-const Note = ({
+export const Note = ({
   note,
   activeNoteId,
   setActiveNoteId,
@@ -101,4 +101,3 @@ Note.propTypes = {
   isSharedMode: PropTypes.bool,
 };
 
-export default Note;
