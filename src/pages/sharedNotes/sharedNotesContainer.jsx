@@ -9,7 +9,7 @@ const SharedNotesContainer = () => {
   const [notes, setNotes] = useState(
     localStorage.sharedNotes ? JSON.parse(localStorage.sharedNotes) : NOTES
   );
-  const [activeNoteId, setActiveNoteId] = useState(-1);
+  const [activeNoteId, setActiveNoteId] = useState(null);
 
   const getActiveNote = () => notes.find(({ id }) => id === activeNoteId);
 
@@ -24,7 +24,7 @@ const SharedNotesContainer = () => {
 };
 
 SharedNotesContainer.propTypes = {
-  activeNoteId: PropTypes.number,
+  activeNoteId: PropTypes.string,
   notes: PropTypes.arrayOf(PropTypes.object),
   setActiveNoteId: PropTypes.func,
 };

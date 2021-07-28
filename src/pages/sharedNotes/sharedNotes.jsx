@@ -41,7 +41,7 @@ const SharedNotes = ({notes, activeNoteId, setActiveNoteId, getActiveNote}) => {
   );
 };
 SharedNotes.propTypes = {
-  activeNoteId: PropTypes.number,
+  activeNoteId: PropTypes.string,
   notes: PropTypes.arrayOf(PropTypes.object),
   setActiveNoteId: PropTypes.func,
   getActiveNote: PropTypes.func,

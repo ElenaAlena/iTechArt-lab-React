@@ -4,11 +4,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CloseIcon from "@material-ui/icons/Close";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
 
 import { cutDescription, dateFormatter } from "utils/utils.js";
+/*import SharedSelect from "components/SharedSelect/SharedSelect";*/
 
 import useStyles from "./styled";
 
@@ -19,6 +21,7 @@ export const Note = ({
   isEditMode,
   setIsEditMode,
   isSharedMode,
+  onDeleteNote,
 }) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
@@ -34,12 +37,17 @@ export const Note = ({
     !isSharedMode && setIsEditMode(false);
     setActiveNoteId(noteId);
   };
+  const onDeleteAnyNote = (event, noteId) => {
+    event.stopPropagation();
+    setActiveNoteId("");
+    onDeleteNote(note.id);
+  };
   const cardClasses = [
     classes.root,
-    note.id === activeNoteId ? classes.active : "",
+    note && note.id === activeNoteId ? classes.active : "",
   ].join(" ");
   return (
-    <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
+    note && <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
       <CardHeader
         className={classes.text}
         action={
@@ -60,6 +68,15 @@ export const Note = ({
                 onClick={(event) => onEditNote(event)}
               >
                 <EditIcon />
+              </IconButton>
+            )}
+            {!isSharedMode && (
+              <IconButton
+                aria-label="Delete"
+                className={classes.btn}
+                onClick={(event) => onDeleteAnyNote(event, note.id)}
+              >
+                <DeleteIcon />
               </IconButton>
             )}
           </div>
@@ -87,17 +104,17 @@ export const Note = ({
             by {note.authorName}
           </Typography>
         )}
+        
       </CardContent>
     </Card>
   );
 };
 
 Note.propTypes = {
-  activeNoteId: PropTypes.number,
+  activeNoteId: PropTypes.string,
   setActiveNoteId: PropTypes.func,
   note: PropTypes.object,
   setIsEditMode: PropTypes.func,
   isEditMode: PropTypes.bool,
   isSharedMode: PropTypes.bool,
 };
-

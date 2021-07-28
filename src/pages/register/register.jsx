@@ -6,7 +6,7 @@ import AUTHFORMDATA from "config/constants/authformdata";
 
 import useStyles from "./styled";
 
-const AuthForm = ({ formik }) => {
+const Register = ({ formik }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -17,7 +17,7 @@ const AuthForm = ({ formik }) => {
             <div key={index}>
               <TextField
                 id={data.id}
-                required = {data.required}
+                required={data.required}
                 label={data.label}
                 variant="outlined"
                 name={data.name}
@@ -28,20 +28,21 @@ const AuthForm = ({ formik }) => {
                   shrink: true,
                 }}
                 fullWidth
-                className={classes.textField}                
+                className={classes.textField}
                 margin="dense"
-                error = {!!formik.errors[data.id]}
-                helperText = {formik.errors[data.id]}
+                error={!!formik.errors[data.id]}
+                helperText={formik.errors[data.id]}
               />
             </div>
           ))}
-          <Button type="submit" variant="contained">
-            Submit
+          <Button type="submit" variant="contained" className={classes.btn}>
+            Register
           </Button>
+          <a href="/login">Log In</a>         
         </form>
       </Paper>
     </div>
   );
 };
 
-export default AuthForm;
+export default Register;

@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
-import AuthForm from "./authForm";
+import Register from "./register";
 
 import AUTHFORMDATA from "config/constants/authformdata";
+import { userActions } from "config/actions/userActions";
 
 const validate = (values) => {
   const errors = {};
@@ -37,8 +40,16 @@ const validate = (values) => {
   return errors;
 };
 
-const AuthFormContainer = () => {
-  const getInitialValues = AUTHFORMDATA.reduce((initialValues,formItem) => {
+const RegisterContainer = () => {
+  const dispatch = useDispatch();
+
+  // reset login status
+  useEffect(() => {
+    dispatch(userActions.logout());
+  }, []);
+
+
+  const getInitialValues = AUTHFORMDATA.reduce((initialValues, formItem) => {
     initialValues[formItem.id] = formItem.initialValue;
     return initialValues;
   }, {});
@@ -46,10 +57,12 @@ const AuthFormContainer = () => {
     initialValues: getInitialValues,
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      if (values) {
+        dispatch(userActions.register(values));
+      }
     },
   });
-  return <AuthForm formik={formik} />;
+  return <Register formik={formik} />;
 };
 
-export default AuthFormContainer;
+export default RegisterContainer;

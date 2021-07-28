@@ -1,25 +1,29 @@
 import PropTypes from "prop-types";
 
 import { Note } from "./Note";
+import useStyles from "./styled"
 
-const NotesList = ({ notes, activeNoteId, setActiveNoteId,isEditMode, setIsEditMode,isSharedMode=false }) => (
-  <div className="notes-list">
-    {notes.map((note) => (
+const NotesList = ({ notes,activeNoteId, setActiveNoteId,isEditMode, setIsEditMode,isSharedMode=false, onDeleteNote}) => {  
+
+  return (
+  <div style={useStyles.noteList}>
+    {notes && notes.map((note, index) => (
       <Note
-        note={note}
+        note={note}     
         activeNoteId={activeNoteId}
         setActiveNoteId={setActiveNoteId}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         isSharedMode={isSharedMode}
-        key={note.id}
+        key={index}
+        onDeleteNote={onDeleteNote}
       />
     ))}
   </div>
-)
+)}
 
 NotesList.propTypes = {
-  activeNoteId: PropTypes.number,
+  activeNoteId: PropTypes.string,
   notes: PropTypes.arrayOf(PropTypes.object),
   setActiveNoteId: PropTypes.func,
   setIsEditMode:PropTypes.func,
