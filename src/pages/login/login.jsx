@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -41,9 +43,13 @@ const Login = ({ formik }) => {
           <Button type="submit" variant="contained" className={classes.btn}>
             Login
           </Button>
-          <a href="/register" component="button">
+          <NavLink
+            className={classes.navLink}
+            to="/register"
+            activeClassName={classes.active}
+          >
             Register
-          </a>
+          </NavLink>
         </form>
       </Paper>
     </div>
