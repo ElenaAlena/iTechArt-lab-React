@@ -3,7 +3,7 @@ import { alertActions } from "./alertActions";
 
 import { USERMODE } from "config/constants/userMode";
 
-const login = (email, password, from) => {
+const login = (email, password) => {
   const request = (user) => ({ type: USERMODE.LOGIN_REQUEST, user });
   const success = (user) => ({ type: USERMODE.LOGIN_SUCCESS, user });
   const failure = (error) => ({ type: USERMODE.LOGIN_FAILURE, error });
@@ -14,9 +14,7 @@ const login = (email, password, from) => {
 
     userService.login(email, password).then(
       (user) => {
-        dispatch(success(user));
-        window.history.pushState(from, "", from.pathname);
-        window.history.go(0);
+        dispatch(success(user));   
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -41,8 +39,6 @@ const register = (user) => {
     userService.register(user).then(
       (user) => {
         dispatch(success());
-        window.history.pushState(null, "LoginForm", "/login");
-        window.history.go(0);
         dispatch(alertActions.success("Registration successful"));
       },
       (error) => {

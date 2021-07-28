@@ -5,7 +5,7 @@ export const registrationReducer = (state = {}, action) => {
     case USERMODE.REGISTER_REQUEST:
       return { registering: true };
     case USERMODE.REGISTER_SUCCESS:
-      return {};
+      return { registered: true };
     case USERMODE.REGISTER_FAILURE:
       return {};
     default:

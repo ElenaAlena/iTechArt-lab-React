@@ -4,7 +4,7 @@ const ROUTES =[
         component:'LoginContainer',
         title: "Log In",
         isLink:false,
-        private:false
+        private:false         
     },
     {
         path:"/register",

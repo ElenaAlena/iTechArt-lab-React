@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {Redirect } from "react-router-dom";
 
 import Register from "./register";
 
@@ -42,6 +43,9 @@ const validate = (values) => {
 
 const RegisterContainer = () => {
   const dispatch = useDispatch();
+  const registered = useSelector((state) => {
+    return state.registrationReducer.registered;
+  });
 
   // reset login status
   useEffect(() => {
@@ -62,6 +66,11 @@ const RegisterContainer = () => {
       }
     },
   });
+
+  if (registered) {
+    return <Redirect to="/login" />
+  }
+
   return <Register formik={formik} />;
 };
 
