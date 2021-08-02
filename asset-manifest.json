@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/iTechArt-lab-React/static/css/main.a617e044.chunk.css",
-    "main.js": "/iTechArt-lab-React/static/js/main.2bf6ba2f.chunk.js",
-    "main.js.map": "/iTechArt-lab-React/static/js/main.2bf6ba2f.chunk.js.map",
-    "runtime-main.js": "/iTechArt-lab-React/static/js/runtime-main.397e411c.js",
-    "runtime-main.js.map": "/iTechArt-lab-React/static/js/runtime-main.397e411c.js.map",
-    "static/js/2.498b1247.chunk.js": "/iTechArt-lab-React/static/js/2.498b1247.chunk.js",
-    "static/js/2.498b1247.chunk.js.map": "/iTechArt-lab-React/static/js/2.498b1247.chunk.js.map",
-    "static/js/3.bcf5505c.chunk.js": "/iTechArt-lab-React/static/js/3.bcf5505c.chunk.js",
-    "static/js/3.bcf5505c.chunk.js.map": "/iTechArt-lab-React/static/js/3.bcf5505c.chunk.js.map",
+    "main.js": "/iTechArt-lab-React/static/js/main.54b67bf1.chunk.js",
+    "main.js.map": "/iTechArt-lab-React/static/js/main.54b67bf1.chunk.js.map",
+    "runtime-main.js": "/iTechArt-lab-React/static/js/runtime-main.28058092.js",
+    "runtime-main.js.map": "/iTechArt-lab-React/static/js/runtime-main.28058092.js.map",
+    "static/js/2.830bf02c.chunk.js": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js",
+    "static/js/2.830bf02c.chunk.js.map": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js.map",
+    "static/js/3.4bb3f81d.chunk.js": "/iTechArt-lab-React/static/js/3.4bb3f81d.chunk.js",
+    "static/js/3.4bb3f81d.chunk.js.map": "/iTechArt-lab-React/static/js/3.4bb3f81d.chunk.js.map",
     "index.html": "/iTechArt-lab-React/index.html",
     "static/css/main.a617e044.chunk.css.map": "/iTechArt-lab-React/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.498b1247.chunk.js.LICENSE.txt": "/iTechArt-lab-React/static/js/2.498b1247.chunk.js.LICENSE.txt"
+    "static/js/2.830bf02c.chunk.js.LICENSE.txt": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.397e411c.js",
-    "static/js/2.498b1247.chunk.js",
+    "static/js/runtime-main.28058092.js",
+    "static/js/2.830bf02c.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.2bf6ba2f.chunk.js"
+    "static/js/main.54b67bf1.chunk.js"
   ]
 }
