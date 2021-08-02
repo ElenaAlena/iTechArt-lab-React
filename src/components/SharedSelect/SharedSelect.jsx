@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useStore } from "react-redux";
+
 import Select from "@material-ui/core/Select";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from '@material-ui/core/FormControl';
-import { useTheme } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import useStyles from "./styled";
+import { userService } from "utils/userService";
+import { requestOptions } from "api/requestOptions";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -20,38 +25,35 @@ const MenuProps = {
   },
 };
 
-const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
-];
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
-
-const SharedSelect = () => {
+const SharedSelect = ({ allUsersData, noteId }) => {
   const [personName, setPersonName] = useState([]);
+  const user = useStore().getState().authenticationReducer.user;  
   const classes = useStyles();
-  const theme = useTheme();
-
+  const setSharedNotes = useMutation(userService.setSharedNotes);    
+  const getRecipients = useQuery(
+    ["recipients", noteId, user.email, personName],
+    () =>
+      requestOptions.getRecipientsOfNote({
+        note_id: noteId,
+        user_id: user.email,
+      }),
+    {
+      enabled: !personName.length,
+    }
+  );
   const handleChange = (event) => {
+    event.stopPropagation();
     setPersonName(event.target.value);
+    setSharedNotes.mutate({
+      recipients: event.target.value,
+      note_id: noteId,
+      user_id: user.email,
+    });
   };
-  return (
-    <React.Fragment>
+  useEffect(() => {
+    setPersonName([]);
+  },[noteId]);
+  return getRecipients.isSuccess || getRecipients.isIdle ? (
     <FormControl className={classes.formControl}>
       <InputLabel id="demo-mutiple-name-label">Share to</InputLabel>
       <Select
@@ -59,24 +61,21 @@ const SharedSelect = () => {
         labelId="demo-mutiple-name-label"
         id="demo-mutiple-name"
         multiple
-        value={personName}
+        value={personName.length ? personName : getRecipients.data}
         onChange={handleChange}
         input={<Input />}
+        renderValue={(selected) => selected.join(", ")}
         MenuProps={MenuProps}
       >
-        {names.map((name) => (
-          <MenuItem
-            key={name}
-            value={name}
-            style={getStyles(name, personName, theme)}
-          >
-            {name}
+        {allUsersData.map((recipient_user) => (
+          <MenuItem key={recipient_user.email} value={recipient_user.email}>
+            <ListItemText primary={`${user.firstName} ${user.lastName}`} />
           </MenuItem>
         ))}
       </Select>
-      </FormControl>
-    </React.Fragment>
-
+    </FormControl>
+  ) : (
+    <p></p>
   );
 };
 

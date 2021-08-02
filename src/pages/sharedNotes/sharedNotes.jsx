@@ -7,7 +7,7 @@ import NotesList from "components/NotesList/NotesList";
 
 import useStyles from "./styled.js";
 
-const SharedNotes = ({notes, activeNoteId, setActiveNoteId, getActiveNote}) => {
+const SharedNotes = ({notes, activeNoteId, setActiveNoteId, getActiveNote,getAllUsersSuccess}) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -25,6 +25,7 @@ const SharedNotes = ({notes, activeNoteId, setActiveNoteId, getActiveNote}) => {
             isEditMode={false}
             setIsEditMode={null}
             isSharedMode={true}
+            getAllUsersSuccess={getAllUsersSuccess}
           />
         </Grid>
         <Grid item xs={8}>

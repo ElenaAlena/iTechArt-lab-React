@@ -7,10 +7,7 @@ const login = async (email, password) => {
     body: JSON.stringify({ email, password }),
   };
 
-  const response = await fetch(
-    `/users/authenticate`,
-    requestOptions
-  );
+  const response = await fetch(`/users/authenticate`, requestOptions);
 
   const user = await handleResponse(response);
   localStorage.setItem("user", JSON.stringify(user));
@@ -22,7 +19,19 @@ const notes = async (pageNumber) => {
     headers: authHeader(),
     params: { date: "", page: pageNumber },
   };
-  return fetch(`/notes`, requestOptions).then((response) => JSON.parse(response.text()));
+  return fetch(`/notes`, requestOptions).then((response) =>
+    JSON.parse(response.text())
+  );
+};
+const sharedNotes = async (pageNumber) => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+    params: { page: pageNumber },
+  };
+  return fetch(`/sharednotes/get`, requestOptions).then((response) =>
+    JSON.parse(response.text())
+  );
 };
 const logout = () => {
   localStorage.removeItem("user");
@@ -34,8 +43,8 @@ const getAll = () => {
     headers: authHeader(),
   };
 
-  return fetch(`/users`, requestOptions).then(
-    handleResponse
+  return fetch(`/users`, requestOptions).then((response) =>{
+    return JSON.parse(response.text())}
   );
 };
 
@@ -46,8 +55,27 @@ const register = (user) => {
     body: JSON.stringify(user),
   };
 
-  return fetch(`/users/register`, requestOptions).then(
-    handleResponse
+  return fetch(`/users/register`, requestOptions).then(handleResponse);
+};
+
+const setSharedNotes = (sharedNotes)=>{
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(sharedNotes),
+  };
+
+  return fetch(`/sharednotes/set`, requestOptions).then(handleResponse);
+}
+const getRecipientsOfNote = ({note_id,user_id}) => {
+  const requestOptions = {
+    method: "GET",
+    headers: authHeader(),
+    params: { note_id: note_id, user_id:user_id },
+  };
+
+  return fetch(`/sharednotes/getrecipients`, requestOptions).then((response) =>{
+    return JSON.parse(response.text())}
   );
 };
 
@@ -74,4 +102,7 @@ export const userService = {
   register,
   getAll,
   notes,
+  setSharedNotes,
+  getRecipientsOfNote,
+  sharedNotes
 };

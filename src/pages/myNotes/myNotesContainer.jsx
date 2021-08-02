@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import uuid from "react-uuid";
 import PropTypes from "prop-types";
 import { useStore } from "react-redux";
-import { useInfiniteQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery, useQueryClient, useQuery } from "react-query";
 
 import MyNotes from "./MyNotes";
-import { userService } from "utils/userService";
+import { requestOptions } from "api/requestOptions";
 import { addNewNote, updateNote, deleteNote } from "api/noteActions";
 import {
   setNewNote,
@@ -22,28 +22,30 @@ const MyNotesContainer = () => {
   const [filterDate, setFilterDate] = useState("");
   const [filterTitle, setFilterTitle] = useState("");
   const [filteredNotes, setFilteredNotes] = useState(null);
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery(
-    "notes",
-    async ({ pageParam = 0 }) => {
-      const res = await userService.notes(pageParam);
-      return res;
-    },
-    {
-      getNextPageParam: (lastPage) => (lastPage ? lastPage.nextId : 1 ?? false),
-    }
-  );
+  const [currentCard,setcurrentCard] = useState(null);
 
-  if (isFetchingNextPage) {
-    console.log("isFetchingNextPage");
-  }
+  const NotesRequests = () => {
+    const getNotes = useInfiniteQuery(
+      "notes",
+      requestOptions.getNotes,
+      requestOptions.getNotesOptions
+    );
+    const getAllUsers = useQuery("getUsers", () => requestOptions.getAllUsers());
+    return [getNotes, getAllUsers];
+  };
+  const [
+    {
+      data,
+      error,
+      fetchNextPage,
+      hasNextPage,
+      isFetching,
+      isFetchingNextPage,
+      status,
+    },
+    { isLoading, error: getAllUsersError, data: allUsersData, isSuccess: getAllUsersSuccess},
+  ] = NotesRequests();
+
   const observer = useRef();
   const lastElementRef = useCallback(
     (node) => {
@@ -110,7 +112,6 @@ const MyNotesContainer = () => {
       queryClient: queryClient,
       queryName: "notes",
     }).then(() => {
-      
       setActiveNoteId(newNote.id);
       setIsEditMode(true);
     });
@@ -132,10 +133,11 @@ const MyNotesContainer = () => {
       queryName: "notes",
     });
     if (filterTitle || filterDate) {
-      const updatedNotesArr =filteredNotes.pages.map((page) => {
-        page.data = page.data?.filter((item) => item?.id !== noteId);        
-        return page;
-      }) ?? [];
+      const updatedNotesArr =
+        filteredNotes.pages.map((page) => {
+          page.data = page.data?.filter((item) => item?.id !== noteId);
+          return page;
+        }) ?? [];
       setFilteredNotes({ pages: updatedNotesArr });
     }
   };
@@ -186,6 +188,8 @@ const MyNotesContainer = () => {
         onDeleteNote={onDeleteNote}
         onFilterByDate={onFilterByDate}
         onFilterByTitle={onFilterByTitle}
+        getAllUsersSuccess={getAllUsersSuccess}
+        allUsersData = {allUsersData}
       />
       <div ref={lastElementRef}></div>
     </React.Fragment>

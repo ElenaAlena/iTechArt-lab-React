@@ -8,7 +8,6 @@ const login = (email, password) => {
   const success = (user) => ({ type: USERMODE.LOGIN_SUCCESS, user });
   const failure = (error) => ({ type: USERMODE.LOGIN_FAILURE, error });
 
-
   return (dispatch) => {
     dispatch(request({ email }));
 
@@ -49,24 +48,8 @@ const register = (user) => {
   };
 };
 
-const getAll = () => {
-  const request = () => ({ type: USERMODE.GETALL_REQUEST });
-  const success = (users) => ({ type: USERMODE.GETALL_SUCCESS, users });
-  const failure = (error) => ({ type: USERMODE.GETALL_FAILURE, error });
-
-  return (dispatch) => {
-    dispatch(request());
-
-    userService.getAll().then(
-      (users) => dispatch(success(users)),
-      (error) => dispatch(failure(error.toString()))
-    );
-  };
-};
-
 export const userActions = {
   login,
   logout,
-  register,
-  getAll,
+  register,  
 };

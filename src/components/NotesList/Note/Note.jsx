@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CardHeader from "@material-ui/core/CardHeader";
 
 import { cutDescription, dateFormatter } from "utils/utils.js";
-/*import SharedSelect from "components/SharedSelect/SharedSelect";*/
+import SharedSelect from "components/SharedSelect/SharedSelect";
 
 import useStyles from "./styled";
 
@@ -22,6 +22,8 @@ export const Note = ({
   setIsEditMode,
   isSharedMode,
   onDeleteNote,
+  getAllUsersSuccess,
+  allUsersData,
 }) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
@@ -47,66 +49,72 @@ export const Note = ({
     note && note.id === activeNoteId ? classes.active : "",
   ].join(" ");
   return (
-    note && <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
-      <CardHeader
-        className={classes.text}
-        action={
-          <div>
-            {note.id === activeNoteId && !isEditMode && (
-              <IconButton
-                aria-label="close"
-                className={classes.btn}
-                onClick={(event) => onCloseNote(event)}
-              >
-                <CloseIcon />
-              </IconButton>
-            )}
-            {!isSharedMode && (
-              <IconButton
-                aria-label="edit"
-                className={classes.btn}
-                onClick={(event) => onEditNote(event)}
-              >
-                <EditIcon />
-              </IconButton>
-            )}
-            {!isSharedMode && (
-              <IconButton
-                aria-label="Delete"
-                className={classes.btn}
-                onClick={(event) => onDeleteAnyNote(event, note.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            )}
-          </div>
-        }
-        title={note.title}
-      />
-      <CardContent>
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          component="p"
+    note && (
+      <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
+        <CardHeader
           className={classes.text}
-        >
-          {note.description && cutDescription(note.description, 20) + "..."}
-        </Typography>
-        <Typography className={classes.meta} color="textSecondary" gutterBottom>
-          Date of creation {dateFormatter(note.dateCreation)}
-        </Typography>
-        {isSharedMode && (
+          action={
+            <div>
+              {note.id === activeNoteId && !isEditMode && (
+                <IconButton
+                  aria-label="close"
+                  className={classes.btn}
+                  onClick={(event) => onCloseNote(event)}
+                >
+                  <CloseIcon />
+                </IconButton>
+              )}
+              {!isSharedMode && (
+                <IconButton
+                  aria-label="edit"
+                  className={classes.btn}
+                  onClick={(event) => onEditNote(event)}
+                >
+                  <EditIcon />
+                </IconButton>
+              )}
+              {!isSharedMode && (
+                <IconButton
+                  aria-label="Delete"
+                  className={classes.btn}
+                  onClick={(event) => onDeleteAnyNote(event, note.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              )}
+            </div>
+          }
+          title={note.title}
+        />
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            className={classes.text}
+          >
+            {note.description && cutDescription(note.description, 20) + "..."}
+          </Typography>
           <Typography
             className={classes.meta}
             color="textSecondary"
             gutterBottom
           >
-            by {note.authorName}
+            Date of creation {dateFormatter(note.dateCreation)}
           </Typography>
-        )}
-        
-      </CardContent>
-    </Card>
+          {isSharedMode && (
+            <Typography
+              className={classes.meta}
+              color="textSecondary"
+              gutterBottom
+            >
+              by {note.authorName}
+            </Typography>
+          )}
+          {getAllUsersSuccess && allUsersData && <SharedSelect noteId={note.id} allUsersData={allUsersData}/>}
+        </CardContent>
+      </Card>
+    )
   );
 };
 

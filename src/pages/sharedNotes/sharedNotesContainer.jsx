@@ -1,26 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useQuery } from "react-query";
 
-import NOTES from "config/constants/notes.js";
+import { requestOptions } from "api/requestOptions";
 
 import SharedNotes from "./sharedNotes";
 
 const SharedNotesContainer = () => {
-  const [notes, setNotes] = useState(
-    localStorage.sharedNotes ? JSON.parse(localStorage.sharedNotes) : NOTES
+  const { isSuccess, isError, data, error } = useQuery(
+    "getNotes",
+    () => requestOptions.sharedNotes({ pageParam:0 })
   );
   const [activeNoteId, setActiveNoteId] = useState(null);
 
-  const getActiveNote = () => notes.find(({ id }) => id === activeNoteId);
+  const getActiveNote = () => data?.data?.find(({ id }) => id === activeNoteId);
 
-  return (
+  /*data?.then((res) => {
+    setNotes(res);
+  });*/
+  
+  return isSuccess ? (
     <SharedNotes
-      notes={notes}
+      notes={data.data}
       activeNoteId={activeNoteId}
       setActiveNoteId={setActiveNoteId}
       getActiveNote={getActiveNote}
+      getAllUsersSuccess={false}
     />
-  );
+  ) : "";
 };
 
 SharedNotesContainer.propTypes = {

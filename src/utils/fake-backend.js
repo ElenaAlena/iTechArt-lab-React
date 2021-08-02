@@ -28,6 +28,12 @@ export const configureFakeBackend = () => {
             return getUsers();
           case url.endsWith("/notes") && method === "GET":
             return getNotes();
+          case url.endsWith("/sharednotes/set") && method === "POST":
+            return setSharedNotes();
+          case url.endsWith("/sharednotes/get") && method === "GET":
+            return getSharedNotes();
+          case url.endsWith("/sharednotes/getrecipients") && method === "GET":
+            return getRecipientsOfNote();
           default:
             return realFetch(url, opts)
               .then((response) => resolve(response))
@@ -47,7 +53,7 @@ export const configureFakeBackend = () => {
           email: user.email,
           firstName: user.firstName,
           lastName: user.lastName,
-          token: "fake-token",
+          token: "fake-jwt-token",
         });
       };
 
@@ -66,6 +72,37 @@ export const configureFakeBackend = () => {
         return okResult();
       };
 
+      const setSharedNotes = () => {
+        const sharedNote = body;
+        let sharedNotesData =
+          JSON.parse(localStorage.getItem("sharednotes")) || [];
+        sharedNotesData = sharedNotesData?.filter(
+          (item) =>
+            item.note_id !== sharedNote.note_id ||
+            item.user_id !== sharedNote.user_id
+        );
+
+        sharedNote.recipients.forEach((recipient) => {
+          sharedNotesData.push({
+            user_id: sharedNote.user_id,
+            note_id: sharedNote.note_id,
+            recipient_id: recipient,
+          });
+        });
+        localStorage.setItem("sharednotes", JSON.stringify(sharedNotesData));
+        return saveSharedNotes();
+      };
+      const getRecipientsOfNote = () => {
+        let sharedNotesData =
+          JSON.parse(localStorage.getItem("sharednotes")) || [];
+        const recipients = sharedNotesData?.filter(
+          (item) =>
+            item.note_id === opts.params.note_id &&
+            item.user_id === opts.params.user_id
+        );
+        return ok(recipients.map((recipient) => recipient.recipient_id));
+      };
+
       const getUsers = () => {
         if (!isLoggedIn()) return unauthorized();
 
@@ -77,7 +114,7 @@ export const configureFakeBackend = () => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
           const userEmail = user["email"];
-          const allNotes = JSON.parse(localStorage.getItem("notes"))
+          const allNotes = JSON.parse(localStorage.getItem("notes"));
           notesList = allNotes?.[userEmail] || [];
         }
         const pageId =
@@ -85,6 +122,26 @@ export const configureFakeBackend = () => {
             ? null
             : opts.params.page + 1;
         return ok({ data: [notesList[opts.params.page]], nextId: pageId });
+      };
+      const getSharedNotes = () => {
+        let notesList = [];
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+          const allNotes = JSON.parse(
+            localStorage.getItem("sharednotes") || []
+          );
+          notesList =
+            allNotes?.filter((note) => note.recipient_id === user["email"]) ||
+            [];
+        }
+        const holeNotes = JSON.parse(localStorage.getItem("notes"));
+        const sharedNotes = notesList.map((note)=>holeNotes[note.user_id].filter((noteItem)=>noteItem.id===note.note_id)).flat(1);
+        const pageId =
+          opts.params.page + 1 >= notesList.length
+            ? null
+            : opts.params.page + 1;
+        //return ok({ data: [notesList[opts.params.page]], nextId: pageId });
+        return ok({ data: sharedNotes, nextId: pageId });
       };
 
       // helper functions
@@ -107,6 +164,13 @@ export const configureFakeBackend = () => {
           text: () =>
             Promise.resolve(JSON.stringify({ message: "Unauthorized" })),
           //JSON.stringify({ message: "Unauthorized" })
+        });
+      };
+      const saveSharedNotes = () => {
+        resolve({
+          ok: true,
+          text: () =>
+            Promise.resolve(JSON.stringify({ message: "Note was shared" })),
         });
       };
 

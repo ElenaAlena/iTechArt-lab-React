@@ -13,7 +13,13 @@ import ROUTES from "config/constants/routes";
 import ActionAlert from "components/ActionAlert/ActionAlert";
 import { alertActions } from "config/actions/alertActions";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const Layout = ({ children }) => {
   const classes = useStyles();

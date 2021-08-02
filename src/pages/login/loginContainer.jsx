@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFormik } from "formik";
-import { useLocation,Redirect } from "react-router-dom";
-import { useDispatch,useSelector} from "react-redux";
+import { useLocation, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import Login from "./login";
 
@@ -22,18 +22,17 @@ const validate = (values) => {
 };
 
 const LoginContainer = () => {
-
-const user = useSelector((state) => {
-  return state.authenticationReducer.user;
-});
+  const user = useSelector((state) => {
+    return state.authenticationReducer.user;
+  });
 
   const dispatch = useDispatch();
   const location = useLocation();
 
   // reset login status
   useEffect(() => {
-    dispatch(userActions.logout());    
-  },[]);
+    dispatch(userActions.logout());
+  }, []);
 
   const getInitialValues = AUTHFORMDATA.reduce((initialValues, formItem) => {
     initialValues[formItem.id] = formItem.initialValue;
@@ -48,12 +47,10 @@ const user = useSelector((state) => {
       }
     },
   });
-  
   if (user) {
     //const { from } = location.state || { from: { pathname: "/" } };
-    return <Redirect to={location.state || { from: { pathname: "/" } }} />
+    return <Redirect to={location.state || { from: { pathname: "/" } }} />;
   }
-
   return <Login formik={formik} />;
 };
 

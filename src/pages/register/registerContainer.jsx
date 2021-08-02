@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import {Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import Register from "./register";
 
@@ -33,11 +33,9 @@ const validate = (values) => {
   } else if (values.password !== values.confirmpassword) {
     errors.password = "Passwords mismatch";
   }
-
   if (!values.confirmpassword) {
     errors.confirmpassword = "Required";
   }
-
   return errors;
 };
 
@@ -51,7 +49,6 @@ const RegisterContainer = () => {
   useEffect(() => {
     dispatch(userActions.logout());
   }, []);
-
 
   const getInitialValues = AUTHFORMDATA.reduce((initialValues, formItem) => {
     initialValues[formItem.id] = formItem.initialValue;
@@ -68,7 +65,7 @@ const RegisterContainer = () => {
   });
 
   if (registered) {
-    return <Redirect to="/login" />
+    return <Redirect to="/login" />;
   }
 
   return <Register formik={formik} />;
