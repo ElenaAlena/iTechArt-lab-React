@@ -5,9 +5,11 @@ const UseStyles = makeStyles({
     root: {
       marginBottom: "12px",
       textAlign: "right",
+      cursor: 'grab'
     },
     text: {
       textAlign: "left",
+      background:'inherit'
     },
     meta: {
       fontSize: 10,

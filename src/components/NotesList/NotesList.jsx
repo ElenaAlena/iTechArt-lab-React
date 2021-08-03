@@ -13,6 +13,9 @@ const NotesList = ({
   onDeleteNote,
   getAllUsersSuccess,
   allUsersData,
+  setCurrentNote,
+  dragService,
+  reOrder,
 }) => {
   return (
     <div style={useStyles.noteList}>
@@ -29,6 +32,9 @@ const NotesList = ({
             onDeleteNote={onDeleteNote}
             getAllUsersSuccess={getAllUsersSuccess}
             allUsersData={allUsersData}
+            dragService={dragService}
+            setCurrentNote={setCurrentNote}
+            reOrder={reOrder}
           />
         ))}
     </div>

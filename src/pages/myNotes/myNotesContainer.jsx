@@ -6,12 +6,19 @@ import { useInfiniteQuery, useQueryClient, useQuery } from "react-query";
 
 import MyNotes from "./MyNotes";
 import { requestOptions } from "api/requestOptions";
-import { addNewNote, updateNote, deleteNote } from "api/noteActions";
+import {
+  addNewNote,
+  updateNote,
+  deleteNote,
+  reorderNote,
+} from "api/noteActions";
 import {
   setNewNote,
   setUpdatedNote,
   setDeletedNote,
+  setReorderNote,
 } from "api/noteQueryActions";
+import DragService from "utils/dragService";
 
 const MyNotesContainer = () => {
   const queryClient = useQueryClient();
@@ -22,7 +29,7 @@ const MyNotesContainer = () => {
   const [filterDate, setFilterDate] = useState("");
   const [filterTitle, setFilterTitle] = useState("");
   const [filteredNotes, setFilteredNotes] = useState(null);
-  const [currentCard,setcurrentCard] = useState(null);
+  const [currentNote, setCurrentNote] = useState(null);
 
   const NotesRequests = () => {
     const getNotes = useInfiniteQuery(
@@ -30,7 +37,9 @@ const MyNotesContainer = () => {
       requestOptions.getNotes,
       requestOptions.getNotesOptions
     );
-    const getAllUsers = useQuery("getUsers", () => requestOptions.getAllUsers());
+    const getAllUsers = useQuery("getUsers", () =>
+      requestOptions.getAllUsers()
+    );
     return [getNotes, getAllUsers];
   };
   const [
@@ -43,7 +52,12 @@ const MyNotesContainer = () => {
       isFetchingNextPage,
       status,
     },
-    { isLoading, error: getAllUsersError, data: allUsersData, isSuccess: getAllUsersSuccess},
+    {
+      isLoading,
+      error: getAllUsersError,
+      data: allUsersData,
+      isSuccess: getAllUsersSuccess,
+    },
   ] = NotesRequests();
 
   const observer = useRef();
@@ -60,6 +74,7 @@ const MyNotesContainer = () => {
     },
     [isFetching, hasNextPage, fetchNextPage]
   );
+  const drag = DragService;
 
   useEffect(() => {
     if (filterTitle || filterDate) {
@@ -99,12 +114,15 @@ const MyNotesContainer = () => {
   };
 
   const onAddNote = () => {
+    const allNotes = JSON.parse(localStorage.getItem("notes")) || {};
+    const notes = allNotes?.[user.email] || [];
     const newNote = {
       id: uuid(),
       title: "Untitled Note",
       description: "",
       dateCreation: Date.now(),
       authorName: user.firstName,
+      order: notes.length + 1,
     };
     addNewNote({ newNote: newNote, user: user });
     setNewNote({
@@ -170,6 +188,16 @@ const MyNotesContainer = () => {
     });
     setFilteredNotes({ pages: notes });
   };
+  const reOrder = (note) => {
+    //от onServer
+    reorderNote({ note: note, currentNote: currentNote, user: user });
+    setReorderNote({
+      updatedNote: note,
+      currentNote: currentNote,
+      queryClient: queryClient,
+      queryName: "notes",
+    });
+  };
   return status === "loading" ? (
     <p>Loading...</p>
   ) : status === "error" ? (
@@ -189,7 +217,10 @@ const MyNotesContainer = () => {
         onFilterByDate={onFilterByDate}
         onFilterByTitle={onFilterByTitle}
         getAllUsersSuccess={getAllUsersSuccess}
-        allUsersData = {allUsersData}
+        allUsersData={allUsersData}
+        dragService={drag}
+        setCurrentNote={setCurrentNote}
+        reOrder={reOrder}
       />
       <div ref={lastElementRef}></div>
     </React.Fragment>

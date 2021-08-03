@@ -1,4 +1,5 @@
 import NOTES from "config/constants/notes.js";
+import { sordByOrder } from "./utils";
 
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
@@ -115,7 +116,12 @@ export const configureFakeBackend = () => {
         if (user) {
           const userEmail = user["email"];
           const allNotes = JSON.parse(localStorage.getItem("notes"));
-          notesList = allNotes?.[userEmail] || [];
+          notesList =
+            allNotes?.[userEmail].map((note, index) => {
+              note.order = note.order ? note.order : index + 1;
+              return note;
+            }) || [];
+          notesList.sort(sordByOrder);
         }
         const pageId =
           opts.params.page + 1 >= notesList.length
@@ -135,7 +141,13 @@ export const configureFakeBackend = () => {
             [];
         }
         const holeNotes = JSON.parse(localStorage.getItem("notes"));
-        const sharedNotes = notesList.map((note)=>holeNotes[note.user_id].filter((noteItem)=>noteItem.id===note.note_id)).flat(1);
+        const sharedNotes = notesList
+          .map((note) =>
+            holeNotes[note.user_id].filter(
+              (noteItem) => noteItem.id === note.note_id
+            )
+          )
+          .flat(1);
         const pageId =
           opts.params.page + 1 >= notesList.length
             ? null

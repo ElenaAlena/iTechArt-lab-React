@@ -27,6 +27,9 @@ const MyNotes = ({
   onFilterByTitle,
   getAllUsersSuccess,
   allUsersData,
+  dragService,
+  setCurrentNote,
+  reOrder,
 }) => {
   const classes = useStyles();
   return (
@@ -59,6 +62,9 @@ const MyNotes = ({
                 key={i}
                 getAllUsersSuccess={getAllUsersSuccess}
                 allUsersData={allUsersData}
+                dragService={dragService}
+                setCurrentNote={setCurrentNote}
+                reOrder={reOrder}
               />
             ))}
         </Grid>

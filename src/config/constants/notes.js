@@ -5,7 +5,8 @@ const NOTES = [
         dateCreation: new Date("Jul 20 2021").toDateString(),
         id:"1",
         authorName:"Anna",
-        authorEmail:"some@tut.by"
+        authorEmail:"some@tut.by",
+        order:1
     },
     {
         title:"Why do we use it?",
@@ -13,7 +14,8 @@ const NOTES = [
         dateCreation: new Date().toDateString(),
         id:"2",
         authorName:"Anna",
-        authorEmail:"some@tut.by"
+        authorEmail:"some@tut.by",
+        order:2
     },
     {
         title:"Where does it come from?",
@@ -21,7 +23,8 @@ const NOTES = [
         dateCreation: new Date().toDateString(),
         id:"3",
         authorName:"Anna",
-        authorEmail:"some@tut.by"
+        authorEmail:"some@tut.by",
+        order:3
     },
     {
         title:"Where can I get some?",
@@ -29,7 +32,8 @@ const NOTES = [
         dateCreation: new Date().toDateString(),
         id:"4",
         authorName:"Anna",
-        authorEmail:"some@tut.by"
+        authorEmail:"some@tut.by",
+        order:4
     }
 ]
 

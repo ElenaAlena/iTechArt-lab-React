@@ -24,6 +24,9 @@ export const Note = ({
   onDeleteNote,
   getAllUsersSuccess,
   allUsersData,
+  dragService,
+  setCurrentNote,  
+  reOrder
 }) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
@@ -50,7 +53,16 @@ export const Note = ({
   ].join(" ");
   return (
     note && (
-      <Card className={cardClasses} onClick={() => onShowNote(note.id)}>
+      <Card
+        className={cardClasses}
+        onClick={() => onShowNote(note.id)}
+        onDragStart={() => dragService.dragStartHandler(note, setCurrentNote)}
+        onDragLeave={(e) => dragService.dragLeaveHandler(e)}
+        onDragEnd={(e) => dragService.dragLeaveHandler(e)}
+        onDragOver={(e) => dragService.dragOverHandler(e)}
+        onDrop={(e) => dragService.dropHandler(e, note, reOrder)}
+        draggable={true}
+      >
         <CardHeader
           className={classes.text}
           action={
@@ -111,7 +123,9 @@ export const Note = ({
               by {note.authorName}
             </Typography>
           )}
-          {getAllUsersSuccess && allUsersData && <SharedSelect noteId={note.id} allUsersData={allUsersData}/>}
+          {getAllUsersSuccess && allUsersData && (
+            <SharedSelect noteId={note.id} allUsersData={allUsersData} />
+          )}
         </CardContent>
       </Card>
     )

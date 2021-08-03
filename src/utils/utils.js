@@ -8,7 +8,7 @@ const dateFormatter = (date) =>
 
 const authHeader = () => {
   let user = JSON.parse(localStorage.getItem("user"));
-  return (user && user.token) ? { Authorization: "Bearer " + user.token } : {};
+  return user && user.token ? { Authorization: "Bearer " + user.token } : {};
 };
-
-export { cutDescription, dateFormatter, authHeader };
+const sordByOrder = (a, b) => (a.order > b.order ? -1 : 1);
+export { cutDescription, dateFormatter, authHeader, sordByOrder };
