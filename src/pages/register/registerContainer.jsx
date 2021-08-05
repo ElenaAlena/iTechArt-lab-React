@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 import Register from "./register";
+import { userActions } from "config/actions/userActions";
 
 import AUTHFORMDATA from "config/constants/authformdata";
-import { userActions } from "config/actions/userActions";
+import { ROUTESPATHS } from "config/constants/routes";
 
 const validate = (values) => {
   const errors = {};
@@ -65,7 +66,7 @@ const RegisterContainer = () => {
   });
 
   if (registered) {
-    return <Redirect to="/login" />;
+    return <Redirect to={ROUTESPATHS.login} />;
   }
 
   return <Register formik={formik} />;

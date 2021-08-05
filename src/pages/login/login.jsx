@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import AUTHFORMDATA from "config/constants/authformdata";
+import { ROUTESPATHS } from "config/constants/routes";
 
 import useStyles from "./styled";
 
@@ -45,7 +46,7 @@ const Login = ({ formik }) => {
           </Button>
           <NavLink
             className={classes.navLink}
-            to="/register"
+            to={ROUTESPATHS.register}
             activeClassName={classes.active}
           >
             Register

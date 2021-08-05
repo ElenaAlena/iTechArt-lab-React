@@ -11,4 +11,7 @@ const authHeader = () => {
   return user && user.token ? { Authorization: "Bearer " + user.token } : {};
 };
 const sordByOrder = (a, b) => (a.order > b.order ? -1 : 1);
-export { cutDescription, dateFormatter, authHeader, sordByOrder };
+
+const joinByComma = (inputArr) => inputArr.join(", ");
+
+export { cutDescription, dateFormatter, authHeader, sordByOrder, joinByComma };

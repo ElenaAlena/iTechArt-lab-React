@@ -32,6 +32,7 @@ const MyNotes = ({
   reOrder,
 }) => {
   const classes = useStyles();
+  const currentActiveNote = getActiveNote();
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -52,7 +53,7 @@ const MyNotes = ({
         <Grid item xs={4}>
           {notes &&
             notes.pages.map((page, i) => (
-              <NotesList
+              page.data && <NotesList
                 notes={page.data}
                 activeNoteId={activeNoteId}
                 setActiveNoteId={setActiveNoteId}
@@ -70,13 +71,13 @@ const MyNotes = ({
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
-            {isEditMode && getActiveNote() ? (
+            {isEditMode && currentActiveNote ? (
               <MyNoteEdit
-                activeNote={getActiveNote()}
+                activeNote={currentActiveNote}
                 onUpdateNote={onUpdateNote}
               />
             ) : (
-              <MyNoteDesctiption activeNote={getActiveNote()} />
+              <MyNoteDesctiption activeNote={currentActiveNote} />
             )}
           </Paper>
         </Grid>
@@ -86,7 +87,7 @@ const MyNotes = ({
 };
 MyNotes.propTypes = {
   activeNoteId: PropTypes.string,
-  notes: PropTypes.any,
+  notes: PropTypes.object,
   setActiveNoteId: PropTypes.func,
   getActiveNote: PropTypes.func,
   isEditMode: PropTypes.bool,

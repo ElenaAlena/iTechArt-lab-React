@@ -1,5 +1,7 @@
 import { Route, Redirect } from "react-router-dom";
 
+import {ROUTESPATHS} from "config/constants/routes"; 
+
 const PrivateRoute = ({ component: Component, roles, ...rest }) => (
   <Route
     {...rest}
@@ -7,7 +9,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => (
       if (!localStorage.getItem("user")) {
         return (
           <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
+            to={{ pathname: ROUTESPATHS.login, state: { from: props.location } }}
           />
         );
       }

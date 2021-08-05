@@ -19,6 +19,7 @@ import {
   setReorderNote,
 } from "api/noteQueryActions";
 import DragService from "utils/dragService";
+import { helpers } from "./utils";
 
 const MyNotesContainer = () => {
   const queryClient = useQueryClient();
@@ -63,14 +64,20 @@ const MyNotesContainer = () => {
   const observer = useRef();
   const lastElementRef = useCallback(
     (node) => {
-      if (isFetching) return;
-      if (observer.current) observer.current.disconnect();
+      if (isFetching) {
+        return;
+      }
+      if (observer.current) {
+        observer.current.disconnect();
+      }
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
           fetchNextPage();
         }
       });
-      if (node) observer.current.observe(node);
+      if (node) {
+        observer.current.observe(node);
+      }
     },
     [isFetching, hasNextPage, fetchNextPage]
   );
@@ -79,7 +86,9 @@ const MyNotesContainer = () => {
   useEffect(() => {
     if (filterTitle || filterDate) {
       filterNotes();
-    } else setFilteredNotes(null);
+    } else {
+      setFilteredNotes(null);
+    }
   }, [data, filterTitle, filterDate]);
 
   const getActiveNote = () => {
@@ -89,7 +98,9 @@ const MyNotesContainer = () => {
         const pageItems = page.data.filter(
           (pageData) => pageData?.id === activeNoteId
         );
-        if (pageItems && pageItems.length) resultItem = pageItems;
+        if (pageItems && pageItems.length) {
+          resultItem = pageItems;
+        }
         return resultItem;
       }, []);
       if (!activeNoteArray.length) {
@@ -160,70 +171,47 @@ const MyNotesContainer = () => {
     }
   };
 
-  const filterNotes = (filter = {}) => {
-    setActiveNoteId(null);
+  const filterNotes = helpers.useFilterNotes.bind(null, {
+    setActiveNoteId: setActiveNoteId,
+    filterTitle: filterTitle,
+    filterDate: filterDate,
+    data: data,
+    setFilteredNotes: setFilteredNotes,
+  });
+  const reOrder = helpers.useReOrder.bind(null, {
+    currentNote: currentNote,
+    user: user,
+    queryClient: queryClient,
+  });
 
-    const fText = filter.text ? filter.text : filterTitle;
-    const fDate = filter.date ? filter.date : filterDate;
-
-    const notes = [];
-    data?.pages.forEach((page, index) => {
-      notes[index] = {};
-      notes[index].data = page.data.filter((pageData) => {
-        if (pageData) {
-          let res = true;
-          if (fText) {
-            res = pageData.title.toLowerCase().includes(fText.toLowerCase());
-          }
-          if (fDate) {
-            res =
-              res &&
-              new Date(pageData.dateCreation).toDateString() ===
-                new Date(fDate).toDateString();
-          }
-          return res;
-        }
-        return false;
-      });
-    });
-    setFilteredNotes({ pages: notes });
-  };
-  const reOrder = (note) => {
-    //от onServer
-    reorderNote({ note: note, currentNote: currentNote, user: user });
-    setReorderNote({
-      updatedNote: note,
-      currentNote: currentNote,
-      queryClient: queryClient,
-      queryName: "notes",
-    });
-  };
-  return status === "loading" ? (
-    <p>Loading...</p>
-  ) : status === "error" ? (
-    <p>Error: {error.message}</p>
-  ) : (
-    <React.Fragment>
-      <MyNotes
-        notes={filteredNotes || data || []}
-        activeNoteId={activeNoteId}
-        setActiveNoteId={setActiveNoteId}
-        getActiveNote={getActiveNote}
-        isEditMode={isEditMode}
-        setIsEditMode={setIsEditMode}
-        onUpdateNote={onUpdateNote}
-        onAddNote={onAddNote}
-        onDeleteNote={onDeleteNote}
-        onFilterByDate={onFilterByDate}
-        onFilterByTitle={onFilterByTitle}
-        getAllUsersSuccess={getAllUsersSuccess}
-        allUsersData={allUsersData}
-        dragService={drag}
-        setCurrentNote={setCurrentNote}
-        reOrder={reOrder}
-      />
-      <div ref={lastElementRef}></div>
-    </React.Fragment>
+  return (
+    <>
+      {status === "loading" && <p>Loading...</p>}
+      {status === "error" && <p>Error: {error.message}</p>}
+      {status === "success" && (
+        <React.Fragment>
+          <MyNotes
+            notes={filteredNotes || data || []}
+            activeNoteId={activeNoteId}
+            setActiveNoteId={setActiveNoteId}
+            getActiveNote={getActiveNote}
+            isEditMode={isEditMode}
+            setIsEditMode={setIsEditMode}
+            onUpdateNote={onUpdateNote}
+            onAddNote={onAddNote}
+            onDeleteNote={onDeleteNote}
+            onFilterByDate={onFilterByDate}
+            onFilterByTitle={onFilterByTitle}
+            getAllUsersSuccess={getAllUsersSuccess}
+            allUsersData={allUsersData}
+            dragService={drag}
+            setCurrentNote={setCurrentNote}
+            reOrder={reOrder}
+          />
+          <div ref={lastElementRef}></div>
+        </React.Fragment>
+      )}
+    </>
   );
 };
 MyNotesContainer.propTypes = {

@@ -1,6 +1,6 @@
 import { USERMODE } from "config/constants/userMode";
 
-let user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user ? { loggedIn: true, user } : {};
 
 export const authenticationReducer = (state = initialState, action) => {

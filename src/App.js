@@ -1,5 +1,4 @@
-import { Route, Switch, Redirect } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
 
 import "./App.css";
 
@@ -12,7 +11,7 @@ import Page404Container from "./pages/page404/Page404Container";
 import RegisterContainer from "./pages/register/registerContainer";
 import LoginContainer from "./pages/login/loginContainer";
 
-import ROUTES from "config/constants/routes";
+import {ROUTES} from "config/constants/routes";
 
 const componentRegistry = {
   MyNotesContainer: MyNotesContainer,

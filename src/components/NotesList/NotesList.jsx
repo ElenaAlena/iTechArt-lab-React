@@ -21,14 +21,14 @@ const NotesList = ({
     <div style={useStyles.noteList}>
       {notes &&
         notes.map((note, index) => (
-          <Note
+          note && <Note
             note={note}
             activeNoteId={activeNoteId}
             setActiveNoteId={setActiveNoteId}
             isEditMode={isEditMode}
             setIsEditMode={setIsEditMode}
             isSharedMode={isSharedMode}
-            key={index}
+            key={note.id}
             onDeleteNote={onDeleteNote}
             getAllUsersSuccess={getAllUsersSuccess}
             allUsersData={allUsersData}

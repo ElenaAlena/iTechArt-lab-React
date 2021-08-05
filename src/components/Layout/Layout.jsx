@@ -9,7 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
 import useStyles from "./styled";
-import ROUTES from "config/constants/routes";
+import {ROUTES} from "config/constants/routes";
 import ActionAlert from "components/ActionAlert/ActionAlert";
 import { alertActions } from "config/actions/alertActions";
 

@@ -31,7 +31,7 @@ export const Note = ({
   const classes = useStyles();
   const onCloseNote = (event) => {
     event.stopPropagation();
-    setActiveNoteId(-1);
+    setActiveNoteId(null);
   };
   const onEditNote = (event) => {
     event.stopPropagation();
