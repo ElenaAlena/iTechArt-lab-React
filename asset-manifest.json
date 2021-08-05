@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/iTechArt-lab-React/static/css/main.a617e044.chunk.css",
-    "main.js": "/iTechArt-lab-React/static/js/main.ced9f487.chunk.js",
-    "main.js.map": "/iTechArt-lab-React/static/js/main.ced9f487.chunk.js.map",
+    "main.js": "/iTechArt-lab-React/static/js/main.bbc4f15f.chunk.js",
+    "main.js.map": "/iTechArt-lab-React/static/js/main.bbc4f15f.chunk.js.map",
     "runtime-main.js": "/iTechArt-lab-React/static/js/runtime-main.28058092.js",
     "runtime-main.js.map": "/iTechArt-lab-React/static/js/runtime-main.28058092.js.map",
-    "static/js/2.830bf02c.chunk.js": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js",
-    "static/js/2.830bf02c.chunk.js.map": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js.map",
+    "static/js/2.bb213d04.chunk.js": "/iTechArt-lab-React/static/js/2.bb213d04.chunk.js",
+    "static/js/2.bb213d04.chunk.js.map": "/iTechArt-lab-React/static/js/2.bb213d04.chunk.js.map",
     "static/js/3.4bb3f81d.chunk.js": "/iTechArt-lab-React/static/js/3.4bb3f81d.chunk.js",
     "static/js/3.4bb3f81d.chunk.js.map": "/iTechArt-lab-React/static/js/3.4bb3f81d.chunk.js.map",
     "index.html": "/iTechArt-lab-React/index.html",
     "static/css/main.a617e044.chunk.css.map": "/iTechArt-lab-React/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.830bf02c.chunk.js.LICENSE.txt": "/iTechArt-lab-React/static/js/2.830bf02c.chunk.js.LICENSE.txt"
+    "static/js/2.bb213d04.chunk.js.LICENSE.txt": "/iTechArt-lab-React/static/js/2.bb213d04.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.28058092.js",
-    "static/js/2.830bf02c.chunk.js",
+    "static/js/2.bb213d04.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.ced9f487.chunk.js"
+    "static/js/main.bbc4f15f.chunk.js"
   ]
 }
