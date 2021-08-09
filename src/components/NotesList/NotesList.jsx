@@ -34,7 +34,7 @@ const NotesList = ({
             allUsersData={allUsersData}
             dragService={dragService}
             setCurrentNote={setCurrentNote}
-            reOrder={reOrder}
+            reOrder={reOrder}           
           />
         ))}
     </div>

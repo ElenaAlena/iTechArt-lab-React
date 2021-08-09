@@ -1,6 +1,7 @@
 import React from 'react';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup} from '@testing-library/react';
 import renderer from 'react-test-renderer';
+
 import ActionAlert from './ActionAlert';
 
 afterEach(cleanup);

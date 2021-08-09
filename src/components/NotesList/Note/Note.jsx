@@ -25,8 +25,8 @@ export const Note = ({
   getAllUsersSuccess,
   allUsersData,
   dragService,
-  setCurrentNote,  
-  reOrder
+  setCurrentNote,
+  reOrder,
 }) => {
   const classes = useStyles();
   const onCloseNote = (event) => {
@@ -62,6 +62,7 @@ export const Note = ({
         onDragOver={(e) => dragService.dragOverHandler(e)}
         onDrop={(e) => dragService.dropHandler(e, note, reOrder)}
         draggable={true}
+        data-testid="notes-list-item"
       >
         <CardHeader
           className={classes.text}
