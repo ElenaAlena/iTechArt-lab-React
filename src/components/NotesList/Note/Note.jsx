@@ -44,7 +44,7 @@ export const Note = ({
   };
   const onDeleteAnyNote = (event, noteId) => {
     event.stopPropagation();
-    setActiveNoteId("");
+    setActiveNoteId(null);
     onDeleteNote(note.id);
   };
   const cardClasses = [

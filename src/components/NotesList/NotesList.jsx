@@ -19,24 +19,26 @@ const NotesList = ({
 }) => {
   return (
     <div style={useStyles.noteList}>
-      {notes &&
-        notes.map((note, index) => (
-          note && <Note
-            note={note}
-            activeNoteId={activeNoteId}
-            setActiveNoteId={setActiveNoteId}
-            isEditMode={isEditMode}
-            setIsEditMode={setIsEditMode}
-            isSharedMode={isSharedMode}
-            key={note.id}
-            onDeleteNote={onDeleteNote}
-            getAllUsersSuccess={getAllUsersSuccess}
-            allUsersData={allUsersData}
-            dragService={dragService}
-            setCurrentNote={setCurrentNote}
-            reOrder={reOrder}           
-          />
-        ))}
+      {notes?.map(
+        (note, index) =>
+          note && (
+            <Note
+              note={note}
+              activeNoteId={activeNoteId}
+              setActiveNoteId={setActiveNoteId}
+              isEditMode={isEditMode}
+              setIsEditMode={setIsEditMode}
+              isSharedMode={isSharedMode}
+              key={note.id}
+              onDeleteNote={onDeleteNote}
+              getAllUsersSuccess={getAllUsersSuccess}
+              allUsersData={allUsersData}
+              dragService={dragService}
+              setCurrentNote={setCurrentNote}
+              reOrder={reOrder}
+            />
+          )
+      )}
     </div>
   );
 };

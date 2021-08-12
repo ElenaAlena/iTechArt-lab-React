@@ -9,7 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
 import useStyles from "./styled";
-import {ROUTES} from "config/constants/routes";
+import { ROUTES, ROUTESPATHS } from "config/constants/routes";
 import ActionAlert from "components/ActionAlert/ActionAlert";
 import { alertActions } from "config/actions/alertActions";
 
@@ -24,9 +24,7 @@ const queryClient = new QueryClient({
 const Layout = ({ children }) => {
   const classes = useStyles();
   const alert = useSelector((state) => state.alertReducer);
-  const user = useSelector((state) => {
-    return state.authenticationReducer.user;
-  });
+  const user = useSelector((state) => state.authenticationReducer.user);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -35,7 +33,7 @@ const Layout = ({ children }) => {
       dispatch(alertActions.clear());
     });
   }, []);
-  const title = user && user.firstName ? `HI ${user.firstName}` : "";
+  const title = user?.firstName ? `HI ${user.firstName}` : "";
   return (
     <QueryClientProvider client={queryClient} contextSharing={true}>
       <React.Fragment>
@@ -61,7 +59,7 @@ const Layout = ({ children }) => {
               {user && (
                 <NavLink
                   className={classes.navLink}
-                  to="/login"
+                  to={ROUTESPATHS.login}
                   activeClassName={classes.active}
                 >
                   LogOut
