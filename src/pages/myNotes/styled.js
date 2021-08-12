@@ -9,6 +9,12 @@ const UseStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  alignLeft:{
+    textAlign:'left',    
+  },
+  headerBtn:{
+    margin:'0 20px'
+  }
 }));
 
 export default UseStyles;

@@ -1,12 +1,15 @@
+import { NavLink } from "react-router-dom";
+
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import AUTHFORMDATA from "config/constants/authformdata";
+import { ROUTESPATHS } from "config/constants/routes";
 
 import useStyles from "./styled";
 
-const AuthForm = ({ formik }) => {
+const Register = ({ formik }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -17,7 +20,7 @@ const AuthForm = ({ formik }) => {
             <div key={index}>
               <TextField
                 id={data.id}
-                required = {data.required}
+                required={data.required}
                 label={data.label}
                 variant="outlined"
                 name={data.name}
@@ -28,20 +31,27 @@ const AuthForm = ({ formik }) => {
                   shrink: true,
                 }}
                 fullWidth
-                className={classes.textField}                
+                className={classes.textField}
                 margin="dense"
-                error = {!!formik.errors[data.id]}
-                helperText = {formik.errors[data.id]}
+                error={!!formik.errors[data.id]}
+                helperText={formik.errors[data.id]}
               />
             </div>
           ))}
-          <Button type="submit" variant="contained">
-            Submit
+          <Button type="submit" variant="contained" className={classes.btn}>
+            Register
           </Button>
+          <NavLink
+            className={classes.navLink}
+            to={ROUTESPATHS.login}
+            activeClassName={classes.active}
+          >
+            Log In
+          </NavLink>
         </form>
       </Paper>
     </div>
   );
 };
 
-export default AuthForm;
+export default Register;

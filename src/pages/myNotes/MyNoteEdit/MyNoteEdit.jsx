@@ -3,24 +3,24 @@ import PropTypes from "prop-types";
 
 import TextField from "@material-ui/core/TextField";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
 
 import useStylesNoteEdit from "./styled";
 
-const MyNoteEdit = ({activeNote, setIsEditMode, onUpdateNote}) => {
+const MyNoteEdit = ({ activeNote, onUpdateNote }) => {
   const classes = useStylesNoteEdit();
 
-  const [updatedNote, setUpdatedNote] = useState({...activeNote})
+  const [updatedNote, setUpdatedNote] = useState({ ...activeNote });
+  updatedNote.id !== activeNote.id && setUpdatedNote({ ...activeNote });
 
   const onEditField = (field, value) => {
-    setUpdatedNote({...updatedNote,[field]:value}) 
+    setUpdatedNote({ ...updatedNote, [field]: value });
   };
 
-  const onSaveNote = ()=>{    
+  const onSaveNote = () => {
     onUpdateNote(updatedNote);
-    //setIsEditMode(false)
-  }
-  return (    
+  };
+  return (
     <form className={classes.root} noValidate autoComplete="off">
       <div className={classes.formElementContainer}>
         <TextField
@@ -51,7 +51,7 @@ const MyNoteEdit = ({activeNote, setIsEditMode, onUpdateNote}) => {
 
 MyNoteEdit.propTypes = {
   activeNote: PropTypes.object,
-  onUpdateNote:PropTypes.func,
-  setIsEditMode:PropTypes.func,
+  onUpdateNote: PropTypes.func,
+  setIsEditMode: PropTypes.func,
 };
 export default MyNoteEdit;

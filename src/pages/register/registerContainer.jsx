@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-import AuthForm from "./authForm";
+import Register from "./register";
+import { userActions } from "config/actions/userActions";
 
 import AUTHFORMDATA from "config/constants/authformdata";
+import { ROUTESPATHS } from "config/constants/routes";
 
 const validate = (values) => {
   const errors = {};
@@ -29,16 +34,24 @@ const validate = (values) => {
   } else if (values.password !== values.confirmpassword) {
     errors.password = "Passwords mismatch";
   }
-
   if (!values.confirmpassword) {
     errors.confirmpassword = "Required";
   }
-
   return errors;
 };
 
-const AuthFormContainer = () => {
-  const getInitialValues = AUTHFORMDATA.reduce((initialValues,formItem) => {
+const RegisterContainer = () => {
+  const dispatch = useDispatch();
+  const registered = useSelector((state) => {
+    return state.registrationReducer.registered;
+  });
+
+  // reset login status
+  useEffect(() => {
+    dispatch(userActions.logout());
+  }, []);
+
+  const getInitialValues = AUTHFORMDATA.reduce((initialValues, formItem) => {
     initialValues[formItem.id] = formItem.initialValue;
     return initialValues;
   }, {});
@@ -46,10 +59,17 @@ const AuthFormContainer = () => {
     initialValues: getInitialValues,
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      if (values) {
+        dispatch(userActions.register(values));
+      }
     },
   });
-  return <AuthForm formik={formik} />;
+
+  if (registered) {
+    return <Redirect to={ROUTESPATHS.login} />;
+  }
+
+  return <Register formik={formik} />;
 };
 
-export default AuthFormContainer;
+export default RegisterContainer;

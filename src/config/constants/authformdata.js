@@ -5,7 +5,8 @@ const AUTHFORMDATA=[
       name:'email',
       type:'email',
       required:true,
-      initialValue:''
+      initialValue:'',
+      forLogin:true
     },
     {
       id:'firstName',
@@ -37,7 +38,8 @@ const AUTHFORMDATA=[
       name:'password',
       type:'password',
       required:true,
-      initialValue:''
+      initialValue:'',
+      forLogin:true
     },
     {
       id:'confirmpassword',
